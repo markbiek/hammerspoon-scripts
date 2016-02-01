@@ -7,8 +7,30 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
+function outTable(table)
+    for k, v in pairs(table) do
+        print(k, v)
+    end
+end
+
+hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
+    hs.reload()
+    hs.alert.show("Hammerspoon config loaded")
+end)
+
 hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
-     window.focusedWindow():moveOneScreenWest()
+    local curScreen = screen.mainScreen()
+    local origMode = curScreen:currentMode()
+    local newMode = nil
+
+    outTable(origMode)
+
+    window.focusedWindow():moveOneScreenWest()
+
+    curScreen = screen.mainScreen()
+    newMode = curScreen:currentMode()
+
+    outTable(newMode)
 end)
 
 hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
