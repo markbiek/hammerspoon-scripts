@@ -7,7 +7,7 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
--- CMD-OPT-f full screen
+-- Fullscreen
 hotkey.bind({"cmd", "alt"}, "f", function()
     local win = window.focusedWindow()
 
@@ -18,7 +18,7 @@ hotkey.bind({"cmd", "alt"}, "f", function()
     win:setFrame(screenFrame)
 end)
 
--- CMD-OPT-left left half
+-- Left half
 hotkey.bind({"cmd", "alt"}, "left", function()
     local win = window.focusedWindow()
     local f = win:frame()
@@ -33,7 +33,7 @@ hotkey.bind({"cmd", "alt"}, "left", function()
     win:setFrame(f)
 end)
 
--- CMD-OPT-right right half
+-- Right half
 hotkey.bind({"cmd", "alt"}, "right", function()
     local win = window.focusedWindow()
     local f = win:frame()
@@ -49,7 +49,7 @@ hotkey.bind({"cmd", "alt"}, "right", function()
     win:setFrame(f)
 end)
 
--- Position the current window in the bottom-right corner
+-- Bottom right corner
 hotkey.bind({"cmd", "alt", "ctrl"}, "down", function()
     local win = window.focusedWindow()
     local f = win:frame()
@@ -68,17 +68,13 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "down", function()
     f.x = bottomRight.x - f.w
     f.y = bottomRight.y - f.h
     win:setFrame(f)
-
-    -- mjolnir.openconsole();
 end)
 
--- Move the current window up by a distance of the window height
+-- Move up by window height
 hotkey.bind({"cmd", "alt", "ctrl"}, "up", function()
     local win = window.focusedWindow()
     local f = win:frame()
 
     f.y = f.y - f.h
     win:setFrame(f)
-
-    -- mjolnir.openconsole();
 end)
