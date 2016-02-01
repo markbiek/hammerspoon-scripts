@@ -7,6 +7,14 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
+hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
+     window.focusedWindow():moveOneScreenWest()
+end)
+
+hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
+    window.focusedWindow():moveOneScreenEast()
+end)
+
 -- Fullscreen
 hotkey.bind({"cmd", "alt"}, "f", function()
     local win = window.focusedWindow()
