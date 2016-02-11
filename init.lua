@@ -20,6 +20,24 @@ function outTable(table)
     end
 end
 
+function bottomRightCorner(f)
+    -- Screen of the currently focused window
+    local screen = window.focusedWindow():screen()
+    local screenFrame = screen:frame()
+
+    -- Bottom right corner of the current screen
+    local bottomRight = {
+        x = screenFrame.x  + screenFrame.w,
+        y = screenFrame.y + screenFrame.h
+    }
+
+    -- Position the current window in the bottom right corner of the screen
+    f.x = bottomRight.x - f.w
+    f.y = bottomRight.y - f.h
+
+    return f
+end
+
 hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.reload()
     hs.alert.show("Hammerspoon config loaded")
@@ -36,6 +54,7 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
     local appWin = app:getWindow(win:title())
 
     if appWin ~= nil then
+        print(app:name())
         if app:name() == 'MacVim' then
             local f = win:frame()
 
@@ -45,6 +64,7 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
             f.h = 1412
 
             win:setFrame(f)
+        elseif app:name() == 'Terminal' then
         end
     end
 end)
@@ -156,20 +176,7 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "down", function()
     local win = window.focusedWindow()
     local f = win:frame()
 
-    -- Screen of the currently focused window
-    local screen = win:screen()
-    local screenFrame = screen:frame()
-
-    -- Bottom right corner of the current screen
-    local bottomRight = {
-        x = screenFrame.x  + screenFrame.w,
-        y = screenFrame.y + screenFrame.h
-    }
-
-    -- Position the current window in the bottom right corner of the screen
-    f.x = bottomRight.x - f.w
-    f.y = bottomRight.y - f.h
-    win:setFrame(f)
+    win:setFrame(bottomRightCorner(f))
 end)
 
 -- Move up by window height
