@@ -7,6 +7,13 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
+local RESIZE = {
+    s= 10,
+    l= 20
+}
+
+--[[--------------------------------------------------------------------------]]
+--[[ Misc functions ]]
 function outTable(table)
     for k, v in pairs(table) do
         print(k, v)
@@ -17,7 +24,71 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.reload()
     hs.alert.show("Hammerspoon config loaded")
 end)
+--[[--------------------------------------------------------------------------]]
 
+--[[--------------------------------------------------------------------------]]
+--[[ Hotkeys for development workflow ]]
+hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
+    local app = application.frontmostApplication()
+    local win = window.focusedWindow()
+    local screen = win:screen()
+    local screenFrame = screen:frame()
+    local appWin = app:getWindow(win:title())
+
+    if appWin ~= nil then
+        if app:name() == 'MacVim' then
+            local f = win:frame()
+
+            f.x = screenFrame.x
+            f.y = screenFrame.y
+            f.w = 1898
+            f.h = 1412
+
+            win:setFrame(f)
+        end
+    end
+end)
+--[[--------------------------------------------------------------------------]]
+
+--[[--------------------------------------------------------------------------]]
+--[[ Hotkeys to move using hjkl ]]
+-- TODO
+--[[--------------------------------------------------------------------------]]
+
+--[[--------------------------------------------------------------------------]]
+--[[ Hotkeys to resize using wasd ]]
+hotkey.bind({"cmd", "alt"}, "w", function()
+    local win = window.focusedWindow()
+    local f = win:frame()
+
+    f.h = f.h - RESIZE.l
+    win:setFrame(f)
+end)
+hotkey.bind({"cmd", "alt"}, "s", function()
+    local win = window.focusedWindow()
+    local f = win:frame()
+
+    f.h = f.h + RESIZE.l
+    win:setFrame(f)
+end)
+hotkey.bind({"cmd", "alt"}, "a", function()
+    local win = window.focusedWindow()
+    local f = win:frame()
+
+    f.w = f.w - RESIZE.l
+    win:setFrame(f)
+end)
+hotkey.bind({"cmd", "alt"}, "d", function()
+    local win = window.focusedWindow()
+    local f = win:frame()
+
+    f.w = f.w + RESIZE.l
+    win:setFrame(f)
+end)
+--[[--------------------------------------------------------------------------]]
+
+--[[--------------------------------------------------------------------------]]
+--[[ Hotkeys to move windows between screens]]
 hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
     local curScreen = screen.mainScreen()
     local origMode = curScreen:currentMode()
@@ -36,6 +107,7 @@ end)
 hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
     window.focusedWindow():moveOneScreenEast()
 end)
+--[[--------------------------------------------------------------------------]]
 
 -- Fullscreen
 hotkey.bind({"cmd", "alt"}, "f", function()
