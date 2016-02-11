@@ -52,20 +52,21 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
     local screen = win:screen()
     local screenFrame = screen:frame()
     local appWin = app:getWindow(win:title())
+    local f = win:frame()
 
     if appWin ~= nil then
         print(app:name())
         if app:name() == 'MacVim' then
-            local f = win:frame()
 
             f.x = screenFrame.x
             f.y = screenFrame.y
             f.w = 1898
             f.h = 1412
-
-            win:setFrame(f)
         elseif app:name() == 'Terminal' then
+            f = bottomRightCorner(f)
         end
+
+        win:setFrame(f)
     end
 end)
 --[[--------------------------------------------------------------------------]]
