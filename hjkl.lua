@@ -13,33 +13,32 @@ local hjkl = {
 
         f.x = f.x - RESIZE.l
         win:setFrame(lockFrameToScreenEdge(f))
+    end,
+    down = function()
+        local win = window.focusedWindow()
+        local f = win:frame()
+
+        f.y = f.y + RESIZE.l
+        win:setFrame(lockFrameToScreenEdge(f))
+    end,
+    up = function()
+        local win = window.focusedWindow()
+        local f = win:frame()
+
+        f.y = f.y - RESIZE.l
+        win:setFrame(lockFrameToScreenEdge(f))
+    end,
+    right = function()
+        local win = window.focusedWindow()
+        local f = win:frame()
+
+        f.x = f.x + RESIZE.l
+        win:setFrame(lockFrameToScreenEdge(f))
     end
 }
 
 --[[ Hotkeys to move using hjkl ]]
-hotkey.bind({"cmd", "alt"}, "h", hjkl.left)
-
-hotkey.bind({"cmd", "alt"}, "j", function()
-    -- down
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.y = f.y + RESIZE.l
-    win:setFrame(lockFrameToScreenEdge(f))
-end)
-hotkey.bind({"cmd", "alt"}, "k", function()
-    -- up
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.y = f.y - RESIZE.l
-    win:setFrame(lockFrameToScreenEdge(f))
-end)
-hotkey.bind({"cmd", "alt"}, "l", function()
-    -- right
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.x = f.x + RESIZE.l
-    win:setFrame(lockFrameToScreenEdge(f))
-end)
+hotkey.bind({"cmd", "alt"}, "h", hjkl.left, nil, hjkl.left)
+hotkey.bind({"cmd", "alt"}, "j", hjkl.down, nil, hjkl.down)
+hotkey.bind({"cmd", "alt"}, "k", hjkl.up, nil, hjkl.up)
+hotkey.bind({"cmd", "alt"}, "l", hjkl.right, nil, hjkl.right)
