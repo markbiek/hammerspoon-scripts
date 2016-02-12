@@ -10,6 +10,7 @@ local fnutils = require "hs.fnutils"
 local utils = require "utils"
 
 require "hjkl"
+require "wasd"
 
 hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.reload()
@@ -41,39 +42,6 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
 
         win:setFrame(f)
     end
-end)
---[[--------------------------------------------------------------------------]]
-
-
---[[--------------------------------------------------------------------------]]
---[[ Hotkeys to resize using wasd ]]
-hotkey.bind({"cmd", "alt"}, "w", function()
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.h = f.h - RESIZE.l
-    win:setFrame(f)
-end)
-hotkey.bind({"cmd", "alt"}, "s", function()
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.h = f.h + RESIZE.l
-    win:setFrame(f)
-end)
-hotkey.bind({"cmd", "alt"}, "a", function()
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.w = f.w - RESIZE.l
-    win:setFrame(f)
-end)
-hotkey.bind({"cmd", "alt"}, "d", function()
-    local win = window.focusedWindow()
-    local f = win:frame()
-
-    f.w = f.w + RESIZE.l
-    win:setFrame(f)
 end)
 --[[--------------------------------------------------------------------------]]
 
