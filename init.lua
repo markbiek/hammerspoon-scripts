@@ -48,22 +48,27 @@ end)
 --[[--------------------------------------------------------------------------]]
 --[[ Hotkeys to move windows between screens]]
 hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
-    local curScreen = screen.mainScreen()
-    local origMode = curScreen:currentMode()
-    local newMode = nil
+    local win = window.focusedWindow()
+    local fOld = win:frame()
 
-    outTable(origMode)
+    win:moveOneScreenWest()
 
-    window.focusedWindow():moveOneScreenWest()
-
-    curScreen = screen.mainScreen()
-    newMode = curScreen:currentMode()
-
-    outTable(newMode)
+    local fNew = win:frame()
+    fNew.w = fOld.w
+    fNew.h = fOld.h
+    win:setFrame(fNew)
 end)
 
 hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
-    window.focusedWindow():moveOneScreenEast()
+    local win = window.focusedWindow()
+    local fOld = win:frame()
+
+    win:moveOneScreenEast()
+
+    local fNew = win:frame()
+    fNew.w = fOld.w
+    fNew.h = fOld.h
+    win:setFrame(fNew)
 end)
 --[[--------------------------------------------------------------------------]]
 
