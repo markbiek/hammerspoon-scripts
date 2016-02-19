@@ -34,8 +34,8 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "d", function()
 
             f.x = screenFrame.x
             f.y = screenFrame.y
-            f.w = 1898
-            f.h = 1412
+            f.w = 1905
+            f.h = 1425
         elseif app:name() == 'Terminal' then
             f = bottomRightCorner(f)
         end
