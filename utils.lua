@@ -4,11 +4,46 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
+function leftThird(win)
+	local currentScreen = win:screen()
+	local screenFrame = currentScreen:frame()
+
+	win:setFrame(hs.geometry.rect(screenFrame.x, screenFrame.y, screenFrame.w / 3, screenFrame.h))
+end
+
+function rightThird(win)
+	local currentScreen = win:screen()
+	local screenFrame = currentScreen:frame()
+
+	win:setFrame(hs.geometry.rect(screenFrame.x + 2 * (screenFrame.w / 3), screenFrame.y, screenFrame.w / 3, screenFrame.h))
+end
+
+function leftTwoThirds(win)
+	local currentScreen = win:screen()
+	local screenFrame = currentScreen:frame()
+
+	win:setFrame(hs.geometry.rect(screenFrame.x, screenFrame.y, 2 * (screenFrame.w / 3), screenFrame.h))
+end
+
 function leftHalf(win)
 	local currentScreen = win:screen()
 	local screenFrame = currentScreen:frame()
 
 	win:setFrame(hs.geometry.rect(screenFrame.x, screenFrame.y, screenFrame.w / 2, screenFrame.h))
+end
+
+function rightHalf(win)
+	local currentScreen = win:screen()
+	local screenFrame = currentScreen:frame()
+
+	win:setFrame(hs.geometry.rect(screenFrame.x + screenFrame.w / 2, screenFrame.y, screenFrame.w / 2, screenFrame.h))
+end
+
+function fullScreen(win)
+	local currentScreen = win:screen()
+	local screenFrame = currentScreen:frame()
+
+	win:setFrame(screenFrame)
 end
 
 function activateAndMove(appName)
