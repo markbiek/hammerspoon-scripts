@@ -13,6 +13,8 @@ hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.alert.show("Hammerspoon config loaded")
 end)
 
+myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
+
 hs.urlevent.bind("arrangeWindows", function(eventName, params)
 	local win = activateAndMove("Simplenote")
 	if win == nil then
@@ -33,5 +35,5 @@ hs.urlevent.bind("arrangeWindows", function(eventName, params)
 		return
 	end
 
-	fulLScreen(win)
+	fullScreen(win)
 end)

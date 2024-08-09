@@ -4,6 +4,23 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
+local logger = hs.logger.new('utils', 'debug')
+
+function reloadConfig(files)
+    doReload = false
+    for _,file in pairs(files) do
+        if file:sub(-4) == ".lua" then
+            doReload = true
+        end
+    end
+    if doReload then
+		hs.alert.show("Hammerspoon config loaded")
+		hs.timer.doAfter(0.5, function()
+            hs.reload()
+        end)
+    end
+end
+
 function leftThird(win)
 	local currentScreen = win:screen()
 	local screenFrame = currentScreen:frame()
