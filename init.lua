@@ -20,4 +20,18 @@ hs.urlevent.bind("arrangeWindows", function(eventName, params)
 	end
 
 	leftHalf(win)
+
+	local win = activateAndMove("Todoist")
+	if win == nil then
+		return
+	end
+
+	rightHalf(win)
+
+	local win = activateAndMove("Code")
+	if win == nil then
+		return
+	end
+
+	fulLScreen(win)
 end)
