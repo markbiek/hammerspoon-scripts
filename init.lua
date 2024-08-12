@@ -16,24 +16,23 @@ end)
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
 hs.urlevent.bind("arrangeWindows", function(eventName, params)
-	local win = activateAndMove("Simplenote")
+	local win
+
+	win = activateAndMove("Code")
 	if win == nil then
 		return
 	end
+	fullScreen(win)
 
+	win = activateAndMove("Simplenote")
+	if win == nil then
+		return
+	end
 	leftHalf(win)
 
-	local win = activateAndMove("Todoist")
+	win = activateAndMove("Todoist")
 	if win == nil then
 		return
 	end
-
 	rightHalf(win)
-
-	local win = activateAndMove("Code")
-	if win == nil then
-		return
-	end
-
-	fullScreen(win)
 end)
