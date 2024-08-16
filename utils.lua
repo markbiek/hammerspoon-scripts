@@ -4,7 +4,26 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
-local logger = hs.logger.new('utils', 'debug')
+function debugLog(message)
+	local logger = hs.logger.new('utils', 'debug')
+
+	logger.d(message)
+end
+
+function getLaptopScreen()
+	return "Built-in Retina Display"
+end
+
+function getExternalScreen()
+	return "LG ULTRAGEAR"
+end
+
+function screens()
+	local screens = screen.allScreens()
+	for i,screen in ipairs(screens) do
+		debugLog("Screen " .. i .. ": " .. screen:name())
+	end
+end
 
 function reloadConfig(files)
     doReload = false

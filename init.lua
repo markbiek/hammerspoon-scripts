@@ -16,23 +16,12 @@ end)
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
 
 hs.urlevent.bind("arrangeWindows", function(eventName, params)
-	local win
+	local externalScreen = getExternalScreen()
 
-	win = activateAndMove("Code")
-	if win == nil then
-		return
-	end
-	fullScreen(win)
-
-	win = activateAndMove("Simplenote")
-	if win == nil then
-		return
-	end
-	leftHalf(win)
-
-	win = activateAndMove("Todoist")
-	if win == nil then
-		return
-	end
-	rightHalf(win)
+	local windowLayout = {
+        {"Simplenote", nil, externalScreen, hs.layout.left50, nil, nil},
+        {"Todoist", nil, externalScreen, hs.layout.right50, nil, nil},
+        {"Code", nil, externalScreen, hs.layout.maximized, nil, nil},
+    }
+    hs.layout.apply(windowLayout)
 end)
