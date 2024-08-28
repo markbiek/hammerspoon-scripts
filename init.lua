@@ -22,6 +22,7 @@ hs.urlevent.bind("arrangeWindows", function(eventName, params)
         {"Simplenote", nil, externalScreen, hs.layout.left50, nil, nil},
         {"Todoist", nil, externalScreen, hs.layout.right50, nil, nil},
         {"Code", nil, externalScreen, hs.layout.maximized, nil, nil},
+        {"Cursor", nil, externalScreen, hs.layout.maximized, nil, nil},
     }
     hs.layout.apply(windowLayout)
 end)
