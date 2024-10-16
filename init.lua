@@ -6,7 +6,7 @@ local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
 
-local utils = require "utils"
+local utils = require("utils")
 
 hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.reload()
@@ -17,12 +17,22 @@ myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConf
 
 hs.urlevent.bind("arrangeWindows", function(eventName, params)
 	local externalScreen = getExternalScreen()
+	local windowLayout = {}
 
-	local windowLayout = {
-        {"Simplenote", nil, externalScreen, hs.layout.left50, nil, nil},
-        {"Todoist", nil, externalScreen, hs.layout.right50, nil, nil},
-        {"Code", nil, externalScreen, hs.layout.maximized, nil, nil},
-        {"Cursor", nil, externalScreen, hs.layout.maximized, nil, nil},
+	local appsToArrange = {
+        {"Simplenote", hs.layout.left50},
+        {"Todoist", hs.layout.right50},
+        {"Cursor", hs.layout.maximized}
     }
+
+	for _, appInfo in ipairs(appsToArrange) do
+        local appName, position = appInfo[1], appInfo[2]
+		local app = hs.application.find(appName)
+
+        if app ~= nil then
+            table.insert(windowLayout, {appName, nil, externalScreen, position, nil, nil})
+        end
+    end
+
     hs.layout.apply(windowLayout)
 end)
