@@ -3,6 +3,7 @@ local hotkey = require "hs.hotkey"
 local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
+local spaces = require("hs.spaces")
 
 function debugLog(message)
 	local logger = hs.logger.new('utils', 'debug')
@@ -108,3 +109,46 @@ function activateAndMove(appName)
 
 	return win
 end
+
+function moveWindowToNextSpace()
+    local win = hs.window.focusedWindow()
+    if not win then
+        hs.alert.show("No active window")
+        return
+    end
+
+    local screen = win:screen()
+    local allSpaces = spaces.allSpaces()[screen:getUUID()]
+    local currentSpace = spaces.windowSpaces(win)[1]
+    
+    -- Find the current space index
+    local currentIdx = fnutils.indexOf(allSpaces, currentSpace)
+    if not currentIdx then
+        hs.alert.show("Could not determine current space")
+        return
+    end
+    
+    -- Get the next space, wrap around to first if at the end
+    local nextIdx = currentIdx % #allSpaces + 1
+    local nextSpace = allSpaces[nextIdx]
+    
+    -- Move the window
+    spaces.moveWindowToSpace(win, nextSpace)
+    spaces.gotoSpace(nextSpace)  -- Follow the window
+end
+
+return {
+    debugLog = debugLog,
+    getLaptopScreen = getLaptopScreen,
+    getExternalScreen = getExternalScreen,
+    screens = screens,
+    reloadConfig = reloadConfig,
+    leftThird = leftThird,
+    rightThird = rightThird,
+    leftTwoThirds = leftTwoThirds,
+    leftHalf = leftHalf,
+    rightHalf = rightHalf,
+    fullScreen = fullScreen,
+    activateAndMove = activateAndMove,
+    moveWindowToNextSpace = moveWindowToNextSpace
+}

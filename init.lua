@@ -5,12 +5,18 @@ local hotkey = require "hs.hotkey"
 local window = require "hs.window"
 local screen = require "hs.screen"
 local fnutils = require "hs.fnutils"
+local spaces = require("hs.spaces")
 
 local utils = require("utils")
 
 hotkey.bind({"cmd", "alt", "ctrl"}, "r", function()
     hs.reload()
     hs.alert.show("Hammerspoon config loaded")
+end)
+
+hotkey.bind({"cmd", "alt", "ctrl", "shift"}, "right", function()
+    utils.moveWindowToNextSpace()
+	hs.alert.show("Moved window to next space")
 end)
 
 myWatcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reloadConfig):start()
@@ -29,10 +35,16 @@ hs.urlevent.bind("arrangeWindows", function(eventName, params)
         local appName, position = appInfo[1], appInfo[2]
 		local app = hs.application.find(appName)
 
-        if app ~= nil then
-            table.insert(windowLayout, {appName, nil, externalScreen, position, nil, nil})
+        if app then
+            -- Get all windows for the application
+            local windows = app:allWindows()
+            -- Apply layout to each window
+            for _, win in ipairs(windows) do
+                table.insert(windowLayout, {app, win, externalScreen, position, nil, nil})
+            end
         end
     end
 
-    hs.layout.apply(windowLayout)
+    -- Set layout ignoring spaces setting
+    hs.layout.apply(windowLayout, nil, nil, true)
 end)
